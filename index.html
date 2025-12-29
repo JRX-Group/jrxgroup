@@ -1,30 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>JRX Group</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #0b0b0b;
-      color: #ffffff;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      text-align: center;
-    }
-    h1 { font-size: 3rem; margin-bottom: 0.5rem; }
-    p { opacity: 0.7; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JRX Group - Holding Company</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cinzel', serif;
+            background-color: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(200, 145, 22, 0.2);
+        }
+
+        .logo-container {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo-container:hover {
+            filter: drop-shadow(0 0 20px #c89116) drop-shadow(0 0 40px #c89116);
+            transform: scale(1.05);
+        }
+
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #c89116, #d4a22d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 32px;
+            color: #000000;
+            border-radius: 8px;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 10px 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #c89116;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #c89116;
+            text-shadow: 0 0 15px rgba(200, 145, 22, 0.5);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 120px;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            background: linear-gradient(180deg, rgba(200, 145, 22, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(200, 145, 22, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(200, 145, 22, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff, #c89116);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: #c89116;
+            margin-bottom: 40px;
+            letter-spacing: 3px;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        /* Content Section */
+        .content {
+            padding: 100px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 48px;
+            color: #c89116;
+            margin-bottom: 60px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 100px;
+        }
+
+        .card {
+            background: rgba(200, 145, 22, 0.05);
+            border: 1px solid rgba(200, 145, 22, 0.3);
+            padding: 40px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(200, 145, 22, 0.1);
+            border-color: #c89116;
+            box-shadow: 0 10px 40px rgba(200, 145, 22, 0.3);
+        }
+
+        .card h3 {
+            font-size: 28px;
+            color: #c89116;
+            margin-bottom: 20px;
+        }
+
+        .card p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 1px solid rgba(200, 145, 22, 0.2);
+            padding: 60px;
+            position: relative;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #c89116, #d4a22d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 120px;
+            color: #000000;
+            border-radius: 12px;
+        }
+
+        .footer-info {
+            flex: 1;
+            text-align: right;
+            padding-right: 60px;
+        }
+
+        .footer-info p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 10px;
+        }
+
+        .copyright {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 20px 30px;
+            }
+
+            nav {
+                gap: 20px;
+            }
+
+            nav a {
+                font-size: 14px;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .content {
+                padding: 60px 30px;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column-reverse;
+                gap: 40px;
+            }
+
+            .footer-info {
+                text-align: center;
+                padding-right: 0;
+            }
+
+            .footer-logo {
+                width: 300px;
+                height: 300px;
+                font-size: 80px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div>
-    <h1>JRX Group</h1>
-    <p>Holding Company. Coming Soon</p>
-    <p>Contact: <a href="mailto:contact@jrxgroup.co" style="color:#fff;">contact@jrxgroup.co</a></p>
-  </div>
+    <header>
+        <div class="logo-container" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <div class="logo-placeholder">JRX</div>
+        </div>
+        <nav>
+            <a href="#company1">BluIso Games</a>
+            <a href="#company2">JRXDev</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>JRX GROUP</h1>
+        <p>HOLDING COMPANY</p>
+        <p class="hero-description">
+            A distinguished portfolio of premier enterprises, united under visionary leadership and strategic excellence. 
+            We cultivate innovation, drive sustainable growth, and create lasting value across our diverse holdings.
+        </p>
+    </section>
+
+    <section class="content">
+        <h2 class="section-title">Our Portfolio</h2>
+        <div class="cards-container">
+            <div class="card" id="company1">
+                <h3>BluIso Games</h3>
+                <p>
+                    World class independent game development studio. Working on new and original innovative experiences. 
+                </p>
+            </div>
+            <div class="card" id="company2">
+                <h3>JRXDev</h3>
+                <p>
+                    Pioneering new frontiers with cutting-edge technology and strategic vision. 
+                    Delivering transformative value through innovation and operational excellence.
+                </p>
+            </div>
+        </div>
+
+        <h2 class="section-title">Our Vision</h2>
+        <div class="cards-container">
+            <div class="card">
+                <h3>Strategic Excellence</h3>
+                <p>
+                    We identify and nurture high-potential enterprises, providing strategic guidance 
+                    and resources to unlock their full potential in the global marketplace.
+                </p>
+            </div>
+            <div class="card">
+                <h3>Long-Term Value</h3>
+                <p>
+                    Our approach focuses on sustainable growth and value creation, building 
+                    enduring partnerships that stand the test of time.
+                </p>
+            </div>
+            <div class="card">
+                <h3>Innovation Leadership</h3>
+                <p>
+                    We champion innovation across our portfolio, fostering environments where 
+                    groundbreaking ideas flourish and transform industries.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">JRX</div>
+            <div class="footer-info">
+                <p>JRX Group</p>
+                <p>Excellence in Holdings</p>
+                <p class="copyright">© 2024 JRX Group. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
